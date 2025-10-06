@@ -52,17 +52,14 @@ INSERT INTO `categoria` (`id_categoria`, `categ_nombre`, `categ_estado`) VALUES
 CREATE TABLE `cliente` (
   `id_cliente` bigint NOT NULL,
   `cli_nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `cli_nombreuser` varchar(50) NOT NULL,
   `cli_apellido_paterno` varchar(100) NOT NULL,
   `cli_apellido_materno` varchar(100) NOT NULL,
   `cli_correo` varchar(60) NOT NULL,
-  `cli_contrasena` varchar(150) NOT NULL,
   `cli_telefono` varchar(9) NOT NULL,
   `cli_direccion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `cli_estado` int NOT NULL DEFAULT '1',
   `cli_ndocumento` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `id_tipodocumento` bigint NOT NULL,
-  `id_perfil` bigint NOT NULL DEFAULT '4',
   `cli_nombre_empresa` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `cli_direccion_empresa` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -444,8 +441,7 @@ ALTER TABLE `categoria`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`id_cliente`),
-  ADD KEY `FK_TipoDoc_Cliente` (`id_tipodocumento`),
-  ADD KEY `FKrpwisd8jpg0agtv9wm2vdhawi` (`id_perfil`);
+  ADD KEY `FK_TipoDoc_Cliente` (`id_tipodocumento`);
 
 --
 -- Indices de la tabla `compania_transporte`
@@ -707,8 +703,7 @@ ALTER TABLE `venta`
 -- Filtros para la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  ADD CONSTRAINT `FK_TipoDoc_Cliente` FOREIGN KEY (`id_tipodocumento`) REFERENCES `tipo_documento` (`id_tipodocumento`),
-  ADD CONSTRAINT `FKrpwisd8jpg0agtv9wm2vdhawi` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`);
+  ADD CONSTRAINT `FK_TipoDoc_Cliente` FOREIGN KEY (`id_tipodocumento`) REFERENCES `tipo_documento` (`id_tipodocumento`);
 
 --
 -- Filtros para la tabla `contacto`

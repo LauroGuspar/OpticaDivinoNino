@@ -18,11 +18,6 @@ public class Cliente {
     @Column(name="cli_nombre",nullable = false)
     private String nombre;
 
-    @NotBlank(message = "El usuario es obligatorio")
-    @Size(min = 3, max = 50, message = "El usuario debe tener entre 3 y 50 caracteres")
-    @Column(name="cli_nombreuser",nullable = false, unique = true, length = 50)
-    private String usuario;
-
     @NotBlank(message="El Apellido Paterno es obligatorio")
     @Size(min=5, max=100, message="El Apellido Paterno debe de tener mínimos 5 y maximo 100 caracteres")
     @Column(name="cli_apellido_paterno",nullable=false)
@@ -37,10 +32,6 @@ public class Cliente {
     @Email(message = "El correo debe tener un formato válido")
     @Column(name="cli_correo", nullable = false, unique = true, length=60)
     private String correo;
-
-    @Size(min = 6, max=150, message = "La clave debe tener al menos 6 caracteres")
-    @Column(name="cli_contrasena",nullable = false)
-    private String clave;
 
     @NotBlank(message="El Telefono es obligatorio")
     @Size(min=9, max=9, message="El Número telefonico debe de tener mínimos 9 y maximo 9 caracteres")
@@ -64,36 +55,25 @@ public class Cliente {
     @JoinColumn(name = "id_tipodocumento")
     private TipoDocumento tipodocumento;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_perfil")
-    private Perfil perfil;
-
-    @NotBlank(message = "El nombre de empresa es obligatorio")
-    @Size(min = 2, max = 100, message = "El nombre de empresa debe tener entre 2 y 100 caracteres")
-    @Column(name="cli_nombre_empresa",nullable = false)
+    @Column(name="cli_nombre_empresa")
     private String nombreEmpresa;
 
-    @NotBlank(message = "La direccion de empresa es obligatoria")
-    @Size(min = 2, max = 100, message = "La direccion de empresa debe tener entre 2 y 100 caracteres")
-    @Column(name="cli_direccion_empresa",nullable = false)
+    @Column(name="cli_direccion_empresa")
     private String direccionEmpresa;
 
     public Cliente() {
     }
 
-    public Cliente(String nombre, String usuario, String apellidoPaterno, String apellidoMaterno, String correo, String clave, String telefono, String direccion, String ndocumento, TipoDocumento tipodocumento, Perfil perfil, String nombreEmpresa, String direccionEmpresa) {
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String telefono, String direccion, String ndocumento, TipoDocumento tipodocumento, String nombreEmpresa, String direccionEmpresa) {
         this.nombre = nombre;
-        this.usuario = usuario;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
-        this.clave = clave;
         this.telefono = telefono;
         this.direccion = direccion;
         this.estado = 1;
         this.ndocumento = ndocumento;
         this.tipodocumento = tipodocumento;
-        this.perfil = perfil;
         this.nombreEmpresa = nombreEmpresa;
         this.direccionEmpresa = direccionEmpresa;
     }
@@ -112,14 +92,6 @@ public class Cliente {
 
     public void setNombre(@NotBlank(message = "El nombre es obligatorio") @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres") String nombre) {
         this.nombre = nombre;
-    }
-
-    public @NotBlank(message = "El usuario es obligatorio") @Size(min = 3, max = 50, message = "El usuario debe tener entre 3 y 50 caracteres") String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(@NotBlank(message = "El usuario es obligatorio") @Size(min = 3, max = 50, message = "El usuario debe tener entre 3 y 50 caracteres") String usuario) {
-        this.usuario = usuario;
     }
 
     public @NotBlank(message = "El Apellido Paterno es obligatorio") @Size(min = 5, max = 100, message = "El Apellido Paterno debe de tener mínimos 5 y maximo 100 caracteres") String getApellidoPaterno() {
@@ -144,14 +116,6 @@ public class Cliente {
 
     public void setCorreo(@NotBlank(message = "El correo es obligatorio") @Email(message = "El correo debe tener un formato válido") String correo) {
         this.correo = correo;
-    }
-
-    public @Size(min = 6, max = 150, message = "La clave debe tener al menos 6 caracteres") String getClave() {
-        return clave;
-    }
-
-    public void setClave(@Size(min = 6, max = 150, message = "La clave debe tener al menos 6 caracteres") String clave) {
-        this.clave = clave;
     }
 
     public @NotBlank(message = "El Telefono es obligatorio") @Size(min = 9, max = 9, message = "El Número telefonico debe de tener mínimos 9 y maximo 9 caracteres") String getTelefono() {
@@ -192,14 +156,6 @@ public class Cliente {
 
     public void setTipodocumento(TipoDocumento tipodocumento) {
         this.tipodocumento = tipodocumento;
-    }
-
-    public Perfil getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
     }
 
     public @NotBlank(message = "El nombre de empresa es obligatorio") @Size(min = 2, max = 100, message = "El nombre de empresa debe tener entre 2 y 100 caracteres") String getNombreEmpresa() {
