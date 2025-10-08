@@ -18,6 +18,7 @@ $(document).ready(function () {
         delete: (id) => `${API_BASE}/eliminar/${id}`,
         tiposDocumento: `${API_BASE}/tipodocumento`,
         toggleStatus: (id) => `${API_BASE}/cambiar-estado/${id}`,
+        buscarReniec: (dni) => `/reniec/api/buscar/${dni}`,
     };
 
     initializeDataTable();
@@ -78,6 +79,50 @@ $(document).ready(function () {
             this.value = this.value.replace(/[^0-9]/g, '');
             validarNumeroDocumento();
         });
+
+        $('#btnBuscarReniec').on('click', async function () {
+            const dni = $('#ndocumento').val().trim();
+
+            // if (dni.length !== 8 || isNaN(dni)) {
+            //     Swal.fire('Advertencia', 'Ingrese un DNI válido de 8 dígitos', 'warning');
+            //     return;
+            // }
+
+            try {
+                AppUtils.showLoading(true);
+
+                const response = await fetch(`/reniec/api/buscar/${dni}`);
+                const result = await response.json();
+                // console.log('Respuesta RENIEC:', result);
+
+                if (result.success && result.data && result.data.datos) {
+                    const datos = result.data.datos;
+
+                    $('#nombre').val(datos.nombres || '');
+                    $('#apellidoPaterno').val(datos.ape_paterno || '');
+                    $('#apellidoMaterno').val(datos.ape_materno || '');
+
+                    if (datos.domiciliado) {
+                        const d = datos.domiciliado;
+                        const direccionCompleta = [d.direccion, d.distrito, d.provincia, d.departamento]
+                            .filter(Boolean)
+                            .join(', ');
+                        $('#direccion').val(direccionCompleta);
+                    }
+
+                    // Swal.fire('Éxito', 'Datos obtenidos correctamente desde RENIEC', 'success');
+                } else {
+                    Swal.fire('No encontrado', result.message || 'No se encontraron datos para este DNI', 'info');
+                }
+
+            } catch (error) {
+                console.error('Error al buscar en RENIEC:', error);
+                Swal.fire('Error', 'No se pudo conectar al servicio RENIEC', 'error');
+            } finally {
+                AppUtils.showLoading(false);
+            }
+        });
+
         $('#telefono').on('input', function () {
             this.value = this.value.replace(/[^0-9]/g, '');
             validarTelefono();
