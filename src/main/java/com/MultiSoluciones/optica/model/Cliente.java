@@ -158,19 +158,19 @@ public class Cliente {
         this.tipodocumento = tipodocumento;
     }
 
-    public @NotBlank(message = "El nombre de empresa es obligatorio") @Size(min = 2, max = 100, message = "El nombre de empresa debe tener entre 2 y 100 caracteres") String getNombreEmpresa() {
+    public String getNombreEmpresa() {
         return nombreEmpresa;
     }
 
-    public void setNombreEmpresa(@NotBlank(message = "El nombre de empresa es obligatorio") @Size(min = 2, max = 100, message = "El nombre de empresa debe tener entre 2 y 100 caracteres") String nombreEmpresa) {
+    public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
     }
 
-    public @NotBlank(message = "La direccion de empresa es obligatoria") @Size(min = 2, max = 100, message = "La direccion de empresa debe tener entre 2 y 100 caracteres") String getDireccionEmpresa() {
+    public String getDireccionEmpresa() {
         return direccionEmpresa;
     }
 
-    public void setDireccionEmpresa(@NotBlank(message = "La direccion de empresa es obligatoria") @Size(min = 2, max = 100, message = "La direccion de empresa debe tener entre 2 y 100 caracteres") String direccionEmpresa) {
+    public void setDireccionEmpresa(String direccionEmpresa) {
         this.direccionEmpresa = direccionEmpresa;
     }
 }

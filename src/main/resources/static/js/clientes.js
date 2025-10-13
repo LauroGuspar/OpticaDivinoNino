@@ -18,7 +18,6 @@ $(document).ready(function () {
         delete: (id) => `${API_BASE}/eliminar/${id}`,
         tiposDocumento: `${API_BASE}/tipodocumento`,
         toggleStatus: (id) => `${API_BASE}/cambiar-estado/${id}`,
-        buscarReniec: (dni) => `/reniec/api/buscar/${dni}`,
     };
 
     initializeDataTable();
