@@ -13,6 +13,20 @@ body {
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   width: 250px;
+
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #6c757d;
+  border-radius: 4px;
+}
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #adb5bd;
 }
 
 @media (max-width: 767.98px) {

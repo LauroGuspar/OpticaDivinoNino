@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.MultiSoluciones.optica.model.Opcion;
 
+import java.util.Optional;
+
 @Repository
 public interface OpcionRepository extends JpaRepository<Opcion, Long> {
+    Optional<Opcion> findByNombre(String nombre);
 }

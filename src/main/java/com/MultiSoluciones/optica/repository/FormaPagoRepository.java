@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface FormaPagoRepository extends JpaRepository<FormaPago, Long> {
     List<FormaPago> findAllByEstado(Integer estado);
+    List<FormaPago> findAllByEstadoNot(Integer estado);
     Optional<FormaPago> findById(Long id);
     Optional<FormaPago> findByNombre(String nombre);
     @Modifying

@@ -10,8 +10,9 @@ import java.util.Optional;
 @Service
 public interface TipoVentaService {
     List<TipoVenta> listarActivos();
-    Optional<FormaPago> buscarPorId(Long id);
-    FormaPago guardar(FormaPago formaPago);
+    List<TipoVenta> listarTodos();
+    Optional<TipoVenta> buscarPorId(Long id);
+    TipoVenta guardar(TipoVenta tipoVenta);
     void eliminar(Long id);
     boolean cambiarEstado(Long id);
 }

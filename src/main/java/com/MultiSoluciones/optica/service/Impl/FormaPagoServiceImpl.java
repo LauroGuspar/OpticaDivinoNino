@@ -27,11 +27,19 @@ public class FormaPagoServiceImpl implements FormaPagoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<FormaPago> listarTodos() {
+        return formaPagoRepository.findAllByEstadoNot(2);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<FormaPago> buscarFormaPagoPorId(Long id) {
         return formaPagoRepository.findById(id);
     }
 
     @Override
+    @Transactional
     public FormaPago guardarFormaPago(FormaPago formaPago) {
         if (formaPago.getId() == null) {
             Optional<FormaPago> existenteOpt = formaPagoRepository.findByNombre(formaPago.getNombre());
@@ -49,6 +57,7 @@ public class FormaPagoServiceImpl implements FormaPagoService {
     }
 
     @Override
+    @Transactional
     public void eliminarFormaPago(Long id) {
         FormaPago formaPago = formaPagoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Forma de pago no encontrada con ID: " + id));
@@ -57,6 +66,7 @@ public class FormaPagoServiceImpl implements FormaPagoService {
     }
 
     @Override
+    @Transactional
     public boolean cambiarEstadoFormaPago(Long id) {
         Optional<FormaPago> formaOpt = formaPagoRepository.findById(id);
         if (formaOpt.isEmpty()) {

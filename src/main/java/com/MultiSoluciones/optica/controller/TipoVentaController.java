@@ -1,8 +1,8 @@
 package com.MultiSoluciones.optica.controller;
 
-import com.MultiSoluciones.optica.model.FormaPago;
 import com.MultiSoluciones.optica.model.Marca;
-import com.MultiSoluciones.optica.service.FormaPagoService;
+import com.MultiSoluciones.optica.model.TipoVenta;
+import com.MultiSoluciones.optica.service.TipoVentaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,36 +13,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/forma-pagos")
-public class FormaPagoController {
-    private final FormaPagoService formapagoService;
+@RequestMapping("/tipo-ventas")
+public class TipoVentaController {
+    private final TipoVentaService tipoVentaService;
 
-    public FormaPagoController(FormaPagoService formapagoService) {
-        this.formapagoService = formapagoService;
+    public TipoVentaController(TipoVentaService tipoVentaService) {
+        this.tipoVentaService = tipoVentaService;
     }
 
     @GetMapping("/listar")
-    public String mostrarPaginaFormaPago() {
-        return "formapagos";
+    public String mostrarPagina() {
+        return "tipoventas";
     }
 
     @GetMapping("/api/listar")
     @ResponseBody
-    public ResponseEntity<?> listarFormaPagosApi() {
+    public ResponseEntity<?> listarApi() {
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
-        response.put("data", formapagoService.listarTodos());
+        response.put("data", tipoVentaService.listarTodos());
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/api/{id}")
     @ResponseBody
-    public ResponseEntity<?> obtenerFormaPago(@PathVariable Long id) {
-        return formapagoService.buscarFormaPagoPorId(id)
-                .map(formaPago -> {
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        return tipoVentaService.buscarPorId(id)
+                .map(tipoVenta -> {
                     Map<String, Object> response = new HashMap<>();
                     response.put("success", true);
-                    response.put("data", formaPago);
+                    response.put("data", tipoVenta);
                     return ResponseEntity.ok(response);
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -50,13 +50,13 @@ public class FormaPagoController {
 
     @PostMapping("/api/guardar")
     @ResponseBody
-    public ResponseEntity<?> guardarFormaPago(@RequestBody FormaPago formaPago) {
+    public ResponseEntity<?> guardar(@RequestBody TipoVenta tipoVenta) {
         Map<String, Object> response = new HashMap<>();
         try {
-            FormaPago formaGuardada = formapagoService.guardarFormaPago(formaPago);
+            TipoVenta tVentaGuardada = tipoVentaService.guardar(tipoVenta);
             response.put("success", true);
-            response.put("marca", formaGuardada);
-            response.put("message", formaPago.getId() != null ? "Forma de pago actualizada" : "Forma de pago creada");
+            response.put("tipoVenta", tVentaGuardada);
+            response.put("message", tipoVenta.getId() != null ? "Tipo de venta actualizado" : "Tipo de venta creado");
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             response.put("success", false);
@@ -71,32 +71,32 @@ public class FormaPagoController {
 
     @PostMapping("/api/cambiar-estado/{id}")
     @ResponseBody
-    public ResponseEntity<?> cambiarEstadoFormaPago(@PathVariable Long id) {
+    public ResponseEntity<?> cambiarEstado(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
-        boolean exito = formapagoService.cambiarEstadoFormaPago(id);
+        boolean exito = tipoVentaService.cambiarEstado(id);
         if (exito) {
             response.put("success", true);
-            response.put("message", "Estado de la forma de pago actualizado");
+            response.put("message", "Estado del tipo actualizado");
             return ResponseEntity.ok(response);
         } else {
             response.put("success", false);
-            response.put("message", "Formado de pago no encontrada");
+            response.put("message", "Tipo no encontrado");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
     @DeleteMapping("/api/eliminar/{id}")
     @ResponseBody
-    public ResponseEntity<?> eliminarFormaPago(@PathVariable Long id) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         try {
-            formapagoService.eliminarFormaPago(id);
+            tipoVentaService.eliminar(id);
             response.put("success", true);
-            response.put("message", "Forma de pago eliminada correctamente");
+            response.put("message", "Tipo de venta eliminado correctamente");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("success", false);
-            response.put("message", "Error al eliminar la forma de pago: " + e.getMessage());
+            response.put("message", "Error al eliminar la marca: " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
     }

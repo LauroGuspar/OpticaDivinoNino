@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface TipoVentaRepository extends JpaRepository<TipoVenta, Long> {
     List<TipoVenta> findAllByEstado(Integer estado);
+    List<TipoVenta> findAllByEstadoNot(Integer estado);
     Optional<TipoVenta> findById(Long id);
     Optional<TipoVenta> findByNombre(String nombre);
     @Modifying

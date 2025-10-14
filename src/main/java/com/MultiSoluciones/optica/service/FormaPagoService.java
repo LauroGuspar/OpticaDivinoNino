@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface FormaPagoService {
     List<FormaPago> listarFormaPagosActivos();
+    List<FormaPago> listarTodos();
     Optional<FormaPago> buscarFormaPagoPorId(Long id);
     FormaPago guardarFormaPago(FormaPago formaPago);
     void eliminarFormaPago(Long id);
